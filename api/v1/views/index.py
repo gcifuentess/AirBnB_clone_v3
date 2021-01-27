@@ -14,8 +14,8 @@ def status():
 def stats():
     """app_views stats"""
     from models import storage
-    classes = {"amenity": "Amenity", "city": "City", "place": "Place",
-               "review": "Review", "state": "State", "user": "User"}
+    classes = {"amenities": "Amenity", "cities": "City", "places": "Place",
+               "reviews": "Review", "states": "State", "users": "User"}
     for key, value in classes.items():
         classes[key] = storage.count(value)
 
