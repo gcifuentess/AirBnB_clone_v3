@@ -18,7 +18,7 @@ def teardown_db(exception):
 if __name__ == '__main__':
     api_host = getenv("HBNB_API_HOST")
     api_port = getenv("HBNB_API_PORT")
-    if api_host is not None and api_port is None:
+    if api_host is not None and api_port is not None:
         app.run(host=api_host, port=api_port, threaded=True)
     elif api_host is None and api_port is not None:
         app.run(host='0.0.0.0', port=api_port, threaded=True)
