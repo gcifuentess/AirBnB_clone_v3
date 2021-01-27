@@ -113,3 +113,55 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test the returns of the get method"""
+        storage = FileStorage()
+        new_dict = storage.all()
+        obj = list(new_dict.values())[0]
+        obj_id = obj.id
+        test_obj = storage.get(obj.__class__, obj_id)
+        # Best case, all input are correct
+        self.assertEqual(obj, test_obj)
+
+        test_obj = storage.get("test", obj_id)
+        # No correct Class input
+        self.assertEqual(None, test_obj)
+
+        test_obj = storage.get(obj.__class__, "wrong_id")
+        # No correct id input
+        self.assertEqual(None, test_obj)
+
+        test_obj = storage.get(None, obj_id)
+        # None input as class
+        self.assertEqual(None, test_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test the returns of the count method"""
+        storage = FileStorage()
+        new_dict = storage.all()
+        count = 0
+        for obj in new_dict:
+            count += 1
+        test_count = storage.count()
+        # No class input
+        self.assertEqual(count, test_count)
+
+        test_class = obj.__class__
+        new_dict = storage.all(test_class)
+        count = 0
+        for obj in new_dict:
+            count += 1
+        test_count = storage.count(test_class)
+        # with class input
+        self.assertEqual(count, test_count)
+
+        new_dict = storage.all("No_class")
+        count = 0
+        for obj in new_dict:
+            count += 1
+        test_count = storage.count("No_class")
+        # with wrong class input
+        self.assertEqual(count, test_count)
