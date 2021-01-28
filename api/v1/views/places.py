@@ -14,13 +14,13 @@ def places(city_id):
         abort(404)
     if request.method == 'GET':
         places_list = []
-        for place in storge.all("Place").values():
+        for place in storage.all("Place").values():
             if place.city_id == city_id:
                 places_list.append(place.to_dict())
         return jsonify(places_list)
     else:
         content = request.get_json()
-        content['place_id'] = place_id
+        content["city_id"] = city_id
         if content is None:
             return make_response(jsonify("Not a JSON"), 400)
         elif 'name' not in content:
@@ -29,8 +29,9 @@ def places(city_id):
             return make_response(jsonify("Missing user_id"), 400)
         else:
             user_id = content['user_id']
-            for user in storge.all("User").values():
-                if user._id == user_id:
+            for user in storage.all("User").values():
+                print(user.id)
+                if user.id == user_id:
                     from models.place import Place
                     new_obj = Place(**content)
                     new_obj.save()
