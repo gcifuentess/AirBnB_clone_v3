@@ -52,6 +52,8 @@ def cities_id(city_id):
             del content['created_at']
         if 'updated_at' in content:
             del content['updated_at']
+        if 'state_id' in content:
+            del content['state_id']
         for key, value in content.items():
             setattr(obj, key, value)
         obj.save()
