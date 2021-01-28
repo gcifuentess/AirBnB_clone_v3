@@ -1,20 +1,20 @@
 #!/usr/bin/python3
-"""state view module"""
+"""amanities view module"""
 from flask import request, make_response, jsonify, abort
 from api.v1.views import app_views
 
 
-@app_views.route('/states/', methods=['GET', 'POST'])
-@app_views.route('/states', methods=['GET', 'POST'])
-def states():
-    """app_views states"""
+@app_views.route('/amenities/', methods=['GET', 'POST'])
+@app_views.route('/amenities', methods=['GET', 'POST'])
+def amanities():
+    """app_views amenities"""
     from models import storage
     if request.method == 'GET':
-        states_list = list(storage.all("State").values())
-        states_json = []
-        for state in states_list:
-            states_json.append(state.to_dict())
-        return jsonify(states_json)
+        amenities_list = list(storage.all("Amenity").values())
+        amenities_json = []
+        for amenity in amenities_list:
+            amenities_json.append(amenity.to_dict())
+        return jsonify(amenities_json)
     else:
         content = request.get_json()
         if content is None:
@@ -22,17 +22,17 @@ def states():
         elif 'name' not in content:
             return make_response(jsonify("Missing name"), 400)
         else:
-            from models.state import State
-            new_state = State(**content)
-            new_state.save()
-            return make_response(jsonify(new_state.to_dict()), 201)
+            from models.amenity import Amenity
+            new_amenity = Amenity(**content)
+            new_amenity.save()
+            return make_response(jsonify(new_amenity.to_dict()), 201)
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'PUT', 'DELETE'])
-def states_id(state_id):
-    """app_views state_id"""
+@app_views.route('/amenities/<amenity_id>', methods=['GET', 'PUT', 'DELETE'])
+def amenities_id(amenity_id):
+    """app_views amenities_id"""
     from models import storage
-    obj = storage.get("State", state_id)
+    obj = storage.get("Amenity", amenity_id)
     if obj is None:
         abort(404)
 
