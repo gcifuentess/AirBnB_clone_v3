@@ -20,7 +20,6 @@ def places(city_id):
         return jsonify(places_list)
     else:
         content = request.get_json()
-        content["city_id"] = city_id
         if content is None:
             return make_response(jsonify("Not a JSON"), 400)
         elif 'name' not in content:
@@ -28,13 +27,13 @@ def places(city_id):
         elif 'user_id' not in content:
             return make_response(jsonify("Missing user_id"), 400)
         else:
+            content["city_id"] = city_id
             user_id = content['user_id']
-            for user in storage.all("User").values():
-                if user.id == user_id:
-                    from models.place import Place
-                    new_obj = Place(**content)
-                    new_obj.save()
-                    return make_response(jsonify(new_obj.to_dict()), 201)
+            if storage.get("User", user_id):
+                from models.place import Place
+                new_obj = Place(**content)
+                new_obj.save()
+                return make_response(jsonify(new_obj.to_dict()), 201)
             abort(404)
 
 

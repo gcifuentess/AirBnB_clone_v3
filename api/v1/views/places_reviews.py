@@ -20,7 +20,6 @@ def reviews(place_id):
         return jsonify(reviews_list)
     else:
         content = request.get_json()
-        content["place_id"] = place_id
         if content is None:
             return make_response(jsonify("Not a JSON"), 400)
         elif 'name' not in content:
@@ -30,13 +29,13 @@ def reviews(place_id):
         elif 'user_id' not in content:
             return make_response(jsonify("Missing user_id"), 400)
         else:
+            content["place_id"] = place_id
             user_id = content['user_id']
-            for user in storage.all("User").values():
-                if user.id == user_id:
-                    from models.review import Review
-                    new_obj = Review(**content)
-                    new_obj.save()
-                    return make_response(jsonify(new_obj.to_dict()), 201)
+            if storage.get("User", user_id):
+                from models.review import Review
+                new_obj = Review(**content)
+                new_obj.save()
+                return make_response(jsonify(new_obj.to_dict()), 201)
             abort(404)
 
 
