@@ -20,13 +20,13 @@ def cities(state_id):
         return jsonify(cities_list)
     else:
         content = request.get_json()
-        content['state_id'] = state_id
         if content is None:
             return make_response(jsonify("Not a JSON"), 400)
         elif 'name' not in content:
             return make_response(jsonify("Missing name"), 400)
         else:
             from models.city import City
+            content['state_id'] = state_id
             new_obj = City(**content)
             new_obj.save()
             return make_response(jsonify(new_obj.to_dict()), 201)
