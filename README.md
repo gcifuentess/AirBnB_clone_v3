@@ -59,7 +59,7 @@ Classes inherited from Base Model:
 * `def all(self)` - returns the dictionary __objects
 * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
 * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
-* ` def reload(self)` -  deserializes the JSON file to __objects
+* `def reload(self)` -  deserializes the JSON file to __objects
 
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
@@ -150,13 +150,36 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 ```
 
+## Third part of the project - RESTful API
+Rest API is a software architectural style for Backend.
+
+Rest = “REpresentational State Transfer”. API = Application Programming Interface
+
+Its purpose is to induce performance, scalability, simplicity, modifiability, visibility, portability, and reliability.
+
+Rest API is Resource-based, a resource is an object and can be access by a URI. An object is “displayed”/transferred via a representation (typically JSON). HTTP methods will be actions on a resource.
+
+Example:
+
+* Resource: State (California)
+* Service: contact information (GET)
+* Representation:
+  * id, name, created_at, updated_at
+  * JSON format
+
+
 ## Bugs
-No known bugs at this time. 
+No known bugs at this time.
 
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
+Third part of Airbnb:
+Angie Pérez [![M](https://upload.wikimedia.org/wikipedia/fr/thumb/c/c8/Twitter_Bird.svg/30px-Twitter_Bird.svg.png)](https://twitter.com/xiommyperez)
+Gabriel Cifuentes [![M](https://upload.wikimedia.org/wikipedia/fr/thumb/c/c8/Twitter_Bird.svg/30px-Twitter_Bird.svg.png)](https://twitter.com/_gcifuentess_)
+
 ## License
-Public Domain. No copy write protection. 
+Public Domain. No copy write protection.
