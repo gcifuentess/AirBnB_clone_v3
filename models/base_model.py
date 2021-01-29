@@ -74,10 +74,11 @@ class BaseModel:
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
         if models.storage_t == "db":
-            try:
+            if "password" in new_dict.keys():
                 del new_dict["password"]
-            except:
-                pass
+        else:
+            if "password" in new_dict.keys():
+                new_dict["password"] = new_dict["password"].hexdigest()
         return new_dict
 
     def delete(self):
