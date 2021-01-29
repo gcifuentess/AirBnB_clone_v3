@@ -76,9 +76,6 @@ class BaseModel:
         if models.storage_t == "db":
             if "password" in new_dict.keys():
                 del new_dict["password"]
-        else:
-            if "password" in new_dict.keys():
-                new_dict["password"] = new_dict["password"].hexdigest()
         return new_dict
 
     def delete(self):
